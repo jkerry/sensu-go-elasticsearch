@@ -1,17 +1,17 @@
-# Sensu Go CHANGEME Plugin
-[![Bonsai Asset Badge](https://img.shields.io/badge/CHANGEME-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/CHANGEME/CHANGEME) [![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-CHANGEME.svg?branch=master)](https://travis-ci.org/CHANGEME/sensu-CHANGEME)
+# Sensu Go Elasticsearch metric handler plugin
+[![Bonsai Asset Badge](https://img.shields.io/badge/CHANGEME-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/CHANGEME/CHANGEME) [![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch.svg?branch=master)](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch)
 
 TODO: Description.
 
 ## Installation
 
-Download the latest version of the sensu-CHANGEME from [releases][1],
+Download the latest version of the sensu-go-elasticsearch from [releases][1],
 or create an executable script from this source.
 
-From the local path of the sensu-CHANGEME repository:
+From the local path of the sensu-go-elasticsearch repository:
 
 ```
-go build -o /usr/local/bin/sensu-CHANGEME main.go
+go build -o /usr/local/bin/sensu-go-elasticsearch main.go
 ```
 
 ## Configuration
@@ -40,15 +40,15 @@ Help:
 The Sensu Go CHANGEME for x
 
 Usage:
-  sensu-CHANGEME [flags]
+  sensu-go-elasticsearch [flags]
 
 Flags:
   -f, --foo string   example
-  -h, --help         help for sensu-CHANGEME
+  -h, --help         help for sensu-go-elasticsearch
 ```
 
 ## Contributing
 
 See https://github.com/sensu/sensu-go/blob/master/CONTRIBUTING.md
 
-[1]: https://github.com/CHANGEME/sensu-CHANGEME/releases
+[1]: https://github.com/CHANGEME/sensu-go-elasticsearch/releases
