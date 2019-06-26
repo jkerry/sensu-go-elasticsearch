@@ -25,9 +25,10 @@ func GetPipedEvent() (*types.Event, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read stdin: %s", err.Error())
 	}
-
+	fmt.Println(string(eventJSON))
 	event := &types.Event{}
 	err = json.Unmarshal(eventJSON, event)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to unmarshal stdin data: %s", err.Error())
 	}
