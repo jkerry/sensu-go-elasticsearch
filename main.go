@@ -71,15 +71,13 @@ func run(cmd *cobra.Command, args []string) error {
 
 	event, err := eventprocessing.GetPipedEvent()
 	if err != nil {
-		fmt.Errorf("Could not process or validate event data from stdin: %v", err)
-		return err
+		return fmt.Errorf("Could not process or validate event data from stdin: %v", err)
 	}
 
 	if full_event_logging {
 		encodedEvent, err := json.Marshal(event)
 		if err != nil {
-			fmt.Errorf("error serializing event data to json payload: %v", err)
-			return err
+			return fmt.Errorf("error serializing event data to json payload: %v", err)
 		}
 		err = sendElasticSearchData(string(encodedEvent), index)
 		if err != nil {
@@ -91,18 +89,15 @@ func run(cmd *cobra.Command, args []string) error {
 	for _, point := range event.Metrics.Points {
 		metric, err := eventprocessing.GetMetricFromPoint(point, event.Entity.Name, event.Entity.Namespace, event.Entity.Labels)
 		if err != nil {
-			fmt.Errorf("error processing sensu event MetricPoints into MetricValue: %v", err)
-			return err
+			return fmt.Errorf("error processing sensu event MetricPoints into MetricValue: %v", err)
 		}
 		msg, err := json.Marshal(metric)
 		if err != nil {
-			fmt.Errorf("error serializing metric data to json payload: %v", err)
-			return err
+			return fmt.Errorf("error serializing metric data to json payload: %v", err)
 		}
 		err = sendElasticSearchData(string(msg), index)
 		if err != nil {
-			fmt.Printf("error sending metric data to elasticsearch: %v", err)
-			return err
+			return fmt.Printf("error sending metric data to elasticsearch: %v", err)
 		}
 	}
 	return nil
