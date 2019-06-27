@@ -30,7 +30,7 @@ func main() {
 func configureRootCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "sensu-go-elasticsearch",
-		Short: "The Sensu Go handler for metric and event logging in elasticsearch",
+		Short: "The Sensu Go handler for metric and event logging in elasticsearch\nRequired:  Set the ELASTICSEARCH_URL env var with an appropriate connection url (https://user:pass@hostname:port)",
 		RunE:  run,
 	}
 
