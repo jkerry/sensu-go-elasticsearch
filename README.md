@@ -37,7 +37,7 @@ Define an asset:
 }
 ```
 
-Add a handler:
+Add a handler for metrics:
 ```json
 {
   "type": "Handler",
@@ -48,7 +48,7 @@ Add a handler:
   },
   "spec": {
     "type": "pipe",
-    "command": "sensu-go-elasticsearch -i metric_index_name -d",
+    "command": "sensu-go-elasticsearch --index event_index_name --dated_index",
     "env_vars": [
       "ELASTICSEARCH_URL=https://USERNAME:PASSWORD@URL_TO_ELASTICSEARCH:9243"
     ],
@@ -62,6 +62,27 @@ Add a handler:
 }
 ```
 
+Add a handler for full event data (note the -f flag):
+```json
+{
+  "type": "Handler",
+  "api_version": "core/v2",
+  "metadata": {
+    "name": "elasticsearch",
+    "namespace": "CHANGEME"
+  },
+  "spec": {
+    "type": "pipe",
+    "command": "sensu-go-elasticsearch --index event_index_name --dated_index --full_event_logging",
+    "env_vars": [
+      "ELASTICSEARCH_URL=https://USERNAME:PASSWORD@URL_TO_ELASTICSEARCH:9243"
+    ],
+    "runtime_assets": [
+      "elasticsearch-event-logging"
+    ]
+  }
+}
+```
 ## Usage Examples
 
 Help:
@@ -74,9 +95,10 @@ Usage:
   sensu-go-elasticsearch [flags]
 
 Flags:
-  -d, --dated_index    Should the index have the current date postfixed? ie: metric_data-2019-06-27
-  -h, --help           help for sensu-go-elasticsearch
-  -i, --index string   metric_data
+  -d, --dated_index          Should the index have the current date postfixed? ie: metric_data-2019-06-27
+  -f, --full_event_logging   send the full event body instead of isolating event metrics
+  -h, --help                 help for sensu-go-elasticsearch
+  -i, --index string         metric_data
 ```
 
 ## Contributing

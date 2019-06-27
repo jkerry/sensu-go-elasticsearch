@@ -15,8 +15,8 @@ import (
 )
 
 var (
-	index         string
-	dated_postfix bool
+	index                             string
+	dated_postfix, full_event_logging bool
 )
 
 func main() {
@@ -39,6 +39,12 @@ func configureRootCommand() *cobra.Command {
 		"d",
 		false,
 		"Should the index have the current date postfixed? ie: metric_data-2019-06-27")
+
+	cmd.Flags().BoolVarP(&full_event_logging,
+		"full_event_logging",
+		"f",
+		false,
+		"send the full event body instead of isolating event metrics")
 
 	cmd.Flags().StringVarP(&index,
 		"index",
@@ -69,6 +75,19 @@ func run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if full_event_logging {
+		encodedEvent, err := json.Marshal(event)
+		if err != nil {
+			fmt.Errorf("error serializing event data to json payload: %v", err)
+			return err
+		}
+		err = sendElasticSearchData(string(encodedEvent), index)
+		if err != nil {
+			fmt.Printf("error sending metric data to elasticsearch: %v", err)
+			return err
+		}
+		return nil
+	}
 	for _, point := range event.Metrics.Points {
 		metric, err := eventprocessing.GetMetricFromPoint(point, event.Entity.Name, event.Entity.Namespace, event.Entity.Labels)
 		if err != nil {
@@ -77,10 +96,10 @@ func run(cmd *cobra.Command, args []string) error {
 		}
 		msg, err := json.Marshal(metric)
 		if err != nil {
-			fmt.Errorf("error serializing metric data to pub/sub json payload: %v", err)
+			fmt.Errorf("error serializing metric data to json payload: %v", err)
 			return err
 		}
-		err = sendElasticSearchMetric(string(msg), index)
+		err = sendElasticSearchData(string(msg), index)
 		if err != nil {
 			fmt.Printf("error sending metric data to elasticsearch: %v", err)
 			return err
@@ -89,7 +108,7 @@ func run(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func sendElasticSearchMetric(metricBody string, index string) error {
+func sendElasticSearchData(metricBody string, index string) error {
 	es, _ := elasticsearch.NewDefaultClient()
 	req := esapi.IndexRequest{
 		Index:   generateIndex(),
