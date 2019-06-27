@@ -1,5 +1,5 @@
 # Sensu Go Elasticsearch metric handler plugin
-[![Bonsai Asset Badge](https://img.shields.io/badge/sensu-go-elasticsearch-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/jkerry/sensu-go-elasticsearch) [![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch.svg?branch=master)](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch)
+[![Bonsai Asset Badge](https://img.shields.io/badge/Sensu%20Go%20Elasticsearch-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/jkerry/sensu-go-elasticsearch) [![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch.svg?branch=master)](https://travis-ci.org/CHANGEME/sensu-go-elasticsearch)
 
 sensu-go-elasticsearch is a sensu go handler for pushing metric data and full
 event bodies into elasticsearch for visualization in kibana.

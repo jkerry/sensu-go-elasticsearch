@@ -1,6 +1,6 @@
 language: go
 go:
-- 1.10.x
+- 1.12.4
 install:
 - go get gopkg.in/alecthomas/gometalinter.v1
 - go get github.com/gordonklaus/ineffassign
@@ -9,7 +9,7 @@ install:
 script:
 - gometalinter.v1 --vendor --disable-all --enable=vet --enable=ineffassign
   --enable=goconst --tests ./...
-- env GO111MODULE=on go test -v -race ./...
+- go test -v -race ./...
 
 before_script:
 - echo "REPO $TRAVIS_REPO_SLUG TAG ${TRAVIS_TAG}"
