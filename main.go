@@ -97,7 +97,7 @@ func run(cmd *cobra.Command, args []string) error {
 		}
 		err = sendElasticSearchData(string(msg), index)
 		if err != nil {
-			return fmt.Printf("error sending metric data to elasticsearch: %v", err)
+			return fmt.Errorf("error sending metric data to elasticsearch: %v", err)
 		}
 	}
 	return nil
