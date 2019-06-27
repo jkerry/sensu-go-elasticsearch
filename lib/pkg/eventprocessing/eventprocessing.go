@@ -43,17 +43,13 @@ func GetPipedEvent() (*types.Event, error) {
 	return event, nil
 }
 
-type Tag struct {
-	Tag   string `json:"tag"`
-	Value string `json:"value"`
-}
 type MetricValue struct {
 	Timestamp string  `json:"timestamp"`
 	Name      string  `json:"name"`
 	Entity    string  `json:"entity"`
 	Value     float64 `json:"value"`
 	Namespace string  `json:"namespace"`
-	Tags      []Tag   `json:"tags"`
+	Tags      []string   `json:"tags"`
 }
 
 // {
@@ -63,14 +59,8 @@ type MetricValue struct {
 // 	"entity": "demo_test_agent",
 // 	"namespace": "demo_jk185160",
 // 	"tags": [
-// 			{
-// 					"tag": "company",
-// 					"value": "JKTE001"
-// 			},
-// 			{
-// 					"tag": "site",
-// 					"value": "1001"
-// 			}
+//    "company_jkte001",
+//    "site_1001"
 // 	]
 // }
 
@@ -86,17 +76,11 @@ func parsePointTimestamp(point *types.MetricPoint) (string, error) {
 	return time.Unix(t, 0).Format(time.RFC3339), nil
 }
 
-func buildTag(key string, value string, prefix string) Tag {
-	var tag Tag
-	var tagName string
+func buildTag(key string, value string, prefix string) string {
 	if len(prefix) > 0 {
-		tagName = fmt.Sprintf("%s_%s", prefix, key)
-	} else {
-		tagName = key
+		return fmt.Sprintf("%s_%s_%s", prefix, key, value)
 	}
-	tag.Tag = tagName
-	tag.Value = value
-	return tag
+	return fmt.Sprintf("%s_%s", key, value)
 }
 
 func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID string, entityLabels map[string]string) (MetricValue, error) {
@@ -114,20 +98,17 @@ func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID s
 		return *new(MetricValue), fmt.Errorf("failed to validate event: %s", err.Error())
 	}
 	metric.Timestamp = unixTimestamp
-	metric.Tags = make([]Tag, len(point.Tags)+len(entityLabels)+1)
+	metric.Tags = make([]string, len(point.Tags)+len(entityLabels)+1)
 	i := 0
 	for _, tag := range point.Tags {
 		metric.Tags[i] = buildTag(tag.Name, tag.Value, "")
 		i++
 	}
 	for key, val := range entityLabels {
-		metric.Tags[i] = buildTag(key, val, "entity_label")
+		metric.Tags[i] = buildTag(key, val, "entity")
 		i++
 	}
-	var entityNameTag Tag
-	entityNameTag.Tag = "sensu_entity_name"
-	entityNameTag.Value = entityID
-	metric.Tags[i] = entityNameTag
+	metric.Tags[i] = fmt.Sprintf("sensu_entity_name_%s", entityID)
 	metric.Value = point.Value
 	return metric, nil
 }
