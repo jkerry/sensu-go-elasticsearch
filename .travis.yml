@@ -32,4 +32,4 @@ after_deploy:
 
 #env:
 #  global:
-#  - secure: GITHUB_TOKEN_SECRET
+#  - secure: GITHUB_TOKEN_SECRET 
