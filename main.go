@@ -6,15 +6,17 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
-	"github.com/jkerry/sensu-go-elasticsearch/lib/pkg/eventprocessing"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
+	"github.com/jkerry/sensu-go-elasticsearch/lib/pkg/eventprocessing"
 	"github.com/spf13/cobra"
 )
 
 var (
-	index string
+	index         string
+	dated_postfix bool
 )
 
 func main() {
@@ -32,6 +34,12 @@ func configureRootCommand() *cobra.Command {
 		RunE:  run,
 	}
 
+	cmd.Flags().BoolVarP(&dated_postfix,
+		"dated_index",
+		"d",
+		false,
+		"Should the index have the current date postfixed? ie: metric_data-2019-06-27")
+
 	cmd.Flags().StringVarP(&index,
 		"index",
 		"i",
@@ -39,6 +47,14 @@ func configureRootCommand() *cobra.Command {
 		"metric_data")
 	_ = cmd.MarkFlagRequired("index")
 	return cmd
+}
+
+func generateIndex() string {
+	if dated_postfix {
+		dt := time.Now()
+		return fmt.Sprintf("%s-%s", index, dt.Format("2006.01.02"))
+	}
+	return index
 }
 
 func run(cmd *cobra.Command, args []string) error {
@@ -73,13 +89,12 @@ func run(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-
 func sendElasticSearchMetric(metricBody string, index string) error {
 	es, _ := elasticsearch.NewDefaultClient()
 	req := esapi.IndexRequest{
-		Index:      index,
-		Body:       strings.NewReader(metricBody),
-		Refresh:    "true",
+		Index:   generateIndex(),
+		Body:    strings.NewReader(metricBody),
+		Refresh: "true",
 	}
 
 	// Perform the request with the client.
