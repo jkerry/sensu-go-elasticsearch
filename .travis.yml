@@ -1,6 +1,6 @@
 language: go
 go:
-- 1.12.*
+- 1.12.4
 install:
 - go get gopkg.in/alecthomas/gometalinter.v1
 - go get github.com/gordonklaus/ineffassign
