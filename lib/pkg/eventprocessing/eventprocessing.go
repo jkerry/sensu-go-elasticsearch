@@ -52,6 +52,14 @@ type MetricValue struct {
 	Tags      []string   `json:"tags"`
 }
 
+type EventValue struct {
+	Timestamp string   		 	`json:"timestamp"`
+	Entity    *types.Entity   	`json:"entity"`
+	Check     *types.Check  	`json:"check"`
+	Metrics   *types.Metrics  	`json:"namespace"`
+	Metadata  types.ObjectMeta	`json:"metadata"`
+}
+
 // {
 // 	"name": "avg_cpu",
 // 	"value": "56.0",
@@ -64,8 +72,8 @@ type MetricValue struct {
 // 	]
 // }
 
-func parsePointTimestamp(point *types.MetricPoint) (string, error) {
-	stringTimestamp := strconv.FormatInt(point.Timestamp, 10)
+func parseTimestamp(timestamp int64) (string, error) {
+	stringTimestamp := strconv.FormatInt(timestamp, 10)
 	if len(stringTimestamp) > 10 {
 		stringTimestamp = stringTimestamp[:10]
 	}
@@ -93,7 +101,7 @@ func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID s
 	metric.Name = nameField[0]
 
 	// Find metric timstamp
-	unixTimestamp, err := parsePointTimestamp(point)
+	unixTimestamp, err := parseTimestamp(point.Timestamp)
 	if err != nil {
 		return *new(MetricValue), fmt.Errorf("failed to validate event: %s", err.Error())
 	}
@@ -111,4 +119,21 @@ func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID s
 	metric.Tags[i] = fmt.Sprintf("sensu_entity_name_%s", entityID)
 	metric.Value = point.Value
 	return metric, nil
+}
+
+func ParseEventTimestamp(event *types.Event) (EventValue, error) {
+	var eventValue EventValue
+
+	eventValue.Entity = event.Entity
+	eventValue.Check = event.Check
+	eventValue.Metrics = event.Metrics
+	eventValue.Metadata = event.ObjectMeta
+
+	timestamp, err := parseTimestamp(event.Timestamp)
+	if err != nil {
+		return *new(EventValue), fmt.Errorf("failed to validate event: %s", err.Error())
+	}
+
+	eventValue.Timestamp = timestamp
+	return eventValue, nil
 }

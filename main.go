@@ -75,14 +75,17 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 
 	if full_event_logging {
-		encodedEvent, err := json.Marshal(event)
+		eventValue, err := eventprocessing.ParseEventTimestamp(event)
 		if err != nil {
-			return fmt.Errorf("error serializing event data to json payload: %v", err)
+			return fmt.Errorf("error processing sensu event into eventValue: %v", err)
 		}
-		err = sendElasticSearchData(string(encodedEvent), index)
+		msg, err := json.Marshal(eventValue)
 		if err != nil {
-			fmt.Printf("error sending metric data to elasticsearch: %v", err)
-			return err
+			return fmt.Errorf("error serializing metric data to json payload: %v", err)
+		}
+		err = sendElasticSearchData(string(msg), index)
+		if err != nil {
+			return fmt.Errorf("error sending metric data to elasticsearch: %v", err)
 		}
 		return nil
 	}
