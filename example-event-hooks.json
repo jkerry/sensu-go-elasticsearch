@@ -1,0 +1,258 @@
+{
+  "timestamp": 1562191179,
+  "entity": {
+    "entity_class": "agent",
+    "system": {
+      "hostname": "WUSQL185017-5W3",
+      "os": "windows",
+      "platform": "Microsoft Windows 10 Enterprise",
+      "platform_family": "Standalone Workstation",
+      "platform_version": "10.0.17134 Build 17134",
+      "network": {
+        "interfaces": [
+          {
+            "name": "VirtualBox Host-Only Network",
+            "mac": "0a:00:27:00:00:0d",
+            "addresses": [
+              "fe80::c819:fc17:2ffa:bb07/64",
+              "192.168.56.1/24"
+            ]
+          },
+          {
+            "name": "Ethernet",
+            "mac": "e4:b9:7a:03:3d:e6",
+            "addresses": [
+              "fe80::41b5:3e46:7c54:7aa0/64",
+              "169.254.122.160/16"
+            ]
+          },
+          {
+            "name": "Ethernet 6",
+            "mac": "00:24:9b:19:09:38",
+            "addresses": [
+              "fe80::4987:ddd6:ff11:89b6/64",
+              "169.254.137.182/16"
+            ]
+          },
+          {
+            "name": "Local Area Connection* 2",
+            "mac": "34:e1:2d:c7:c8:3e",
+            "addresses": [
+              "fe80::dce1:46ce:69e1:3dd7/64",
+              "169.254.61.215/16"
+            ]
+          },
+          {
+            "name": "Local Area Connection* 3",
+            "mac": "36:e1:2d:c7:c8:3d",
+            "addresses": [
+              "fe80::180c:d753:e74:6224/64",
+              "169.254.98.36/16"
+            ]
+          },
+          {
+            "name": "Wi-Fi",
+            "mac": "34:e1:2d:c7:c8:3d",
+            "addresses": [
+              "fe80::803a:2de4:a08a:18e9/64",
+              "153.73.90.96/21"
+            ]
+          },
+          {
+            "name": "Bluetooth Network Connection",
+            "mac": "34:e1:2d:c7:c8:41",
+            "addresses": [
+              "fe80::90d0:49fb:9af8:d178/64",
+              "169.254.209.120/16"
+            ]
+          },
+          {
+            "name": "Loopback Pseudo-Interface 1",
+            "addresses": [
+              "::1/128",
+              "127.0.0.1/8"
+            ]
+          }
+        ]
+      },
+      "arch": "amd64"
+    },
+    "subscriptions": [
+      "windows_x64,dev_demo_checks",
+      "entity:ql185017"
+    ],
+    "last_seen": 1562167760,
+    "deregister": false,
+    "deregistration": {},
+    "user": "demo_agents",
+    "metadata": {
+      "name": "ql185017",
+      "namespace": "demo_ql185017"
+    }
+  },
+  "check": {
+    "command": "check_process --name CSO2.Winforms.exe --type running",
+    "handlers": [
+      "slack",
+      "elasticsearch_event_logging"
+    ],
+    "high_flap_threshold": 0,
+    "interval": 10,
+    "low_flap_threshold": 0,
+    "publish": true,
+    "runtime_assets": [
+      "nagios-foundation-windows-x64"
+    ],
+    "subscriptions": [
+      "windows_x64"
+    ],
+    "proxy_entity_name": "",
+    "check_hooks": [
+      {
+        "1": [
+          "fetch_logs"
+        ]
+      },
+      {
+        "2": [
+          "fetch_logs"
+        ]
+      }
+    ],
+    "stdin": false,
+    "subdue": null,
+    "ttl": 0,
+    "timeout": 0,
+    "round_robin": false,
+    "duration": 0.0938363,
+    "executed": 1562191179,
+    "history": [
+      {
+        "status": 2,
+        "executed": 1562190979
+      },
+      {
+        "status": 2,
+        "executed": 1562190989
+      },
+      {
+        "status": 2,
+        "executed": 1562190999
+      },
+      {
+        "status": 2,
+        "executed": 1562191009
+      },
+      {
+        "status": 2,
+        "executed": 1562191019
+      },
+      {
+        "status": 2,
+        "executed": 1562191029
+      },
+      {
+        "status": 2,
+        "executed": 1562191039
+      },
+      {
+        "status": 2,
+        "executed": 1562191049
+      },
+      {
+        "status": 2,
+        "executed": 1562191059
+      },
+      {
+        "status": 2,
+        "executed": 1562191069
+      },
+      {
+        "status": 2,
+        "executed": 1562191079
+      },
+      {
+        "status": 2,
+        "executed": 1562191089
+      },
+      {
+        "status": 2,
+        "executed": 1562191099
+      },
+      {
+        "status": 2,
+        "executed": 1562191109
+      },
+      {
+        "status": 2,
+        "executed": 1562191119
+      },
+      {
+        "status": 2,
+        "executed": 1562191129
+      },
+      {
+        "status": 2,
+        "executed": 1562191139
+      },
+      {
+        "status": 2,
+        "executed": 1562191149
+      },
+      {
+        "status": 2,
+        "executed": 1562191159
+      },
+      {
+        "status": 2,
+        "executed": 1562191169
+      },
+      {
+        "status": 2,
+        "executed": 1562191179
+      }
+    ],
+    "issued": 1562191179,
+    "output": "CheckProcess CRITICAL - Process CSO2.Winforms.exe is not running\n",
+    "state": "failing",
+    "status": 2,
+    "total_state_change": 0,
+    "last_ok": 1562186148,
+    "occurrences": 497,
+    "occurrences_watermark": 607,
+    "hooks": [
+      {
+        "metadata": {
+          "name": "fetch_logs",
+          "namespace": "demo_ql185017"
+        },
+        "command": "powershell.exe -encodedCommand DQAKAA0ACgBTAGUAdAAtAEwAbwBjAGEAdABpAG8AbgAgACQAZQBuAHYAOgBDAFMATwAyAEQAZQBiAG8AdQB0AFAAYQB0AGgADQAKAA0ACgAkAGQAYQB0AGUAIAA9ACAARwBlAHQALQBEAGEAdABlACAALQBGAG8AcgBtAGEAdAAgACIAeQB5AHkAeQBNAE0AZABkACIADQAKAA0ACgBHAGUAdAAtAEMAaABpAGwAZABJAHQAZQBtACAALQBGAGkAbABlACAALQBOAGEAbQBlACAARABlAGIAbwB1AHQALgBDAFMATwAyAC4AKgAkAGQAYQB0AGUALgB0AHgAdAB8ACAARgBvAHIARQBhAGMAaAAtAE8AYgBqAGUAYwB0ACAAewANAAoAIAAgACAAIAAkAGwAbwBnAEYAaQBsAGUAVABhAGkAbAAgAD0AIABHAGUAdAAtAEMAbwBuAHQAZQBuAHQAIAAkAF8AIAAtAFQAYQBpAGwAIAAxAA0ACgAgACAAIAAgAFcAcgBpAHQAZQAtAEgAbwBzAHQAIAAkAF8AIAAiACAAIgAgACQAbABvAGcARgBpAGwAZQBUAGEAaQBsAA0ACgB9AA0ACgA=",
+        "timeout": 120,
+        "stdin": false,
+        "duration": 0.4881094,
+        "executed": 1562191179,
+        "issued": 0,
+        "output": "Now you see me again!",
+        "status": 0
+      }
+    ],
+    "output_metric_format": "nagios_perfdata",
+    "output_metric_handlers": [
+      "elasticsearch"
+    ],
+    "env_vars": null,
+    "metadata": {
+      "name": "windows_check_process",
+      "namespace": "demo_ql185017"
+    }
+  },
+  "metrics": {
+    "handlers": [
+      "elasticsearch"
+    ],
+    "points": null
+  },
+  "metadata": {
+    "namespace": "demo_ql185017"
+  }
+}
