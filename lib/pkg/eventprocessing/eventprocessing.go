@@ -36,28 +36,24 @@ func GetPipedEvent() (*types.Event, error) {
 		return nil, fmt.Errorf("failed to validate event: %s", err.Error())
 	}
 
-	if !event.HasMetrics() {
-		return nil, fmt.Errorf("event does not contain metrics")
-	}
-
 	return event, nil
 }
 
 type MetricValue struct {
-	Timestamp string  `json:"timestamp"`
-	Name      string  `json:"name"`
-	Entity    string  `json:"entity"`
-	Value     float64 `json:"value"`
-	Namespace string  `json:"namespace"`
-	Tags      []string   `json:"tags"`
+	Timestamp string   `json:"timestamp"`
+	Name      string   `json:"name"`
+	Entity    string   `json:"entity"`
+	Value     float64  `json:"value"`
+	Namespace string   `json:"namespace"`
+	Tags      []string `json:"tags"`
 }
 
 type EventValue struct {
-	Timestamp string   		 	`json:"timestamp"`
-	Entity    *types.Entity   	`json:"entity"`
-	Check     *types.Check  	`json:"check"`
-	Metrics   *types.Metrics  	`json:"namespace"`
-	Metadata  types.ObjectMeta	`json:"metadata"`
+	Timestamp string           `json:"timestamp"`
+	Entity    *types.Entity    `json:"entity"`
+	Check     *types.Check     `json:"check"`
+	Metrics   *types.Metrics   `json:"namespace"`
+	Metadata  types.ObjectMeta `json:"metadata"`
 }
 
 // {

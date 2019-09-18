@@ -89,6 +89,10 @@ func run(cmd *cobra.Command, args []string) error {
 		}
 		return nil
 	}
+
+	if !event.HasMetrics() {
+		return fmt.Errorf("event does not contain metrics")
+	}
 	for _, point := range event.Metrics.Points {
 		metric, err := eventprocessing.GetMetricFromPoint(point, event.Entity.Name, event.Entity.Namespace, event.Entity.Labels)
 		if err != nil {
