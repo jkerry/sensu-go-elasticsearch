@@ -87,15 +87,18 @@ func buildTag(key string, value string, prefix string) string {
 	return fmt.Sprintf("%s_%s", key, value)
 }
 
-func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID string, entityLabels map[string]string) (MetricValue, error) {
+func GetMetricFromPoint(point *types.MetricPoint, entityID string, namespaceID string, entityLabels map[string]string, pointNameAsMetricName bool) (MetricValue, error) {
 	var metric MetricValue
 
 	metric.Entity = entityID
 	metric.Namespace = namespaceID
 	// Find metric name
-	nameField := strings.Split(point.Name, ".")
-	metric.Name = nameField[0]
-
+	if pointNameAsMetricName {
+		metric.Name = point.Name
+	} else {
+		nameField := strings.Split(point.Name, ".")
+		metric.Name = nameField[0]
+	}
 	// Find metric timstamp
 	unixTimestamp, err := parseTimestamp(point.Timestamp)
 	if err != nil {

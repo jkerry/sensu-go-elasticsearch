@@ -95,10 +95,11 @@ Usage:
   sensu-go-elasticsearch [flags]
 
 Flags:
-  -d, --dated_index          Should the index have the current date postfixed? ie: metric_data-2019-06-27
-  -f, --full_event_logging   send the full event body instead of isolating event metrics
-  -h, --help                 help for sensu-go-elasticsearch
-  -i, --index string         metric_data
+  -d, --dated_index                 Should the index have the current date postfixed? ie: metric_data-2019-06-27
+  -f, --full_event_logging          send the full event body instead of isolating event metrics
+  -h, --help                        help for sensu-go-elasticsearch
+  -i, --index string                metric_data
+  -p, --point_name_as_metric_name   use the entire point name as the metric name
 ```
 
 ## Contributing
