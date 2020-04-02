@@ -17,6 +17,7 @@ import (
 var (
 	index                             string
 	dated_postfix, full_event_logging bool
+	point_name_as_metric_name         bool
 )
 
 func main() {
@@ -45,6 +46,12 @@ func configureRootCommand() *cobra.Command {
 		"f",
 		false,
 		"send the full event body instead of isolating event metrics")
+
+	cmd.Flags().BoolVarP(&point_name_as_metric_name,
+		"point_name_as_metric_name",
+		"p",
+		false,
+		"use the entire point name as the metric name")
 
 	cmd.Flags().StringVarP(&index,
 		"index",
@@ -94,7 +101,7 @@ func run(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("event does not contain metrics")
 	}
 	for _, point := range event.Metrics.Points {
-		metric, err := eventprocessing.GetMetricFromPoint(point, event.Entity.Name, event.Entity.Namespace, event.Entity.Labels)
+		metric, err := eventprocessing.GetMetricFromPoint(point, event.Entity.Name, event.Entity.Namespace, event.Entity.Labels, point_name_as_metric_name)
 		if err != nil {
 			return fmt.Errorf("error processing sensu event MetricPoints into MetricValue: %v", err)
 		}
