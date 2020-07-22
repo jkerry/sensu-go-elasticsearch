@@ -72,8 +72,7 @@ func generateIndex() string {
 	dt := time.Now()
 	if dated_postfix {
 		return fmt.Sprintf("%s-%s", index, dt.Format("2006.01.02"))
-	}
-	if time_postfix != "" {
+	} else if time_postfix != "" {
 		return fmt.Sprintf("%s%s", index, dt.Format(time_postfix))
 	}
 	return index
