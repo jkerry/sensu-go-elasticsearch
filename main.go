@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	index                             string
+	index, time_postfix               string
 	dated_postfix, full_event_logging bool
 	point_name_as_metric_name         bool
 )
@@ -41,6 +41,12 @@ func configureRootCommand() *cobra.Command {
 		false,
 		"Should the index have the current date postfixed? ie: metric_data-2019-06-27")
 
+	cmd.Flags().StringVarP(&time_postfix,
+		"time_index",
+		"t",
+		"",
+		"uses go date format to generate index postfix: \"-2006.01.02\"")
+
 	cmd.Flags().BoolVarP(&full_event_logging,
 		"full_event_logging",
 		"f",
@@ -63,9 +69,11 @@ func configureRootCommand() *cobra.Command {
 }
 
 func generateIndex() string {
+	dt := time.Now()
 	if dated_postfix {
-		dt := time.Now()
 		return fmt.Sprintf("%s-%s", index, dt.Format("2006.01.02"))
+	} else if time_postfix != "" {
+		return fmt.Sprintf("%s%s", index, dt.Format(time_postfix))
 	}
 	return index
 }

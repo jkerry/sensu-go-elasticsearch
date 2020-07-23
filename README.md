@@ -96,6 +96,7 @@ Usage:
 
 Flags:
   -d, --dated_index                 Should the index have the current date postfixed? ie: metric_data-2019-06-27
+  -t, --time_index string           uses go date format to generate index postfix: "-2006.01.02"")
   -f, --full_event_logging          send the full event body instead of isolating event metrics
   -h, --help                        help for sensu-go-elasticsearch
   -i, --index string                metric_data
